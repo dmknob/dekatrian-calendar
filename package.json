@@ -1,0 +1,15 @@
+{
+  "name": "dekatrian-calendar",
+  "version": "0.0.1",
+  "description": "Routines to convert Gregorian dates to Dekatrian dates",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "calendar",
+    "dekatrian"
+  ],
+  "author": "Denison Knob <dmknob@gmail.com>",
+  "license": "ISC"
+}
