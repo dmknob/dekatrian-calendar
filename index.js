@@ -1,5 +1,22 @@
 const monthsLength = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
 
+const months = [
+  "",
+  "Auroran",
+  "Borean",
+  "Coronian",
+  "Driadan",
+  "Electran",
+  "Faian",
+  "Gaian",
+  "Hermetian",
+  "Irisian",
+  "Kaosian",
+  "Lunan",
+  "Maian",
+  "Nixian"
+];
+
 export function isBissexto(today) {
   ano = today.getFullYear();
   if ((ano % 4 == 0 && ano % 100 != 0) || ano % 400 == 0) {
@@ -14,8 +31,12 @@ export function diaDoAno(today) {
     //If bissexto and date is equal or greater than 29/02
     days++;
   }
-  days += today.getDate(); // How many days elapsed in current month
+  days += today.getDate(); // How many days elapsed in current month + days in full elapsed months
   return days;
+}
+
+export function dekaMonthName(month) {
+  return months[month];
 }
 
 export function dekatrian(today) {
@@ -26,7 +47,8 @@ export function dekatrian(today) {
       day: "Achronian",
       month: "0",
       year: today.getFullYear(),
-      yearlyDay: days
+      yearlyDay: days,
+      monthName: dekaMonthName(0)
     });
   } else if (isBissexto(today) && days == 2) {
     //Sinchronian
@@ -34,7 +56,8 @@ export function dekatrian(today) {
       day: "Sinchronian",
       month: "0",
       year: today.getFullYear(),
-      yearlyDay: days
+      yearlyDay: days,
+      monthName: dekaMonthName(0)
     });
   } else if (this.isBissexto(today) && days > 2) {
     // Bissexto, need to corret by 2 days
@@ -46,15 +69,17 @@ export function dekatrian(today) {
   elapsedMonths = Math.floor(days / 28);
   elapsedDays = days - elapsedMonths * 28;
   dekaDay = elapsedDays;
-  dekaMonth = elapsedMonths + 1; //Adjust index
+  dekaMonth = elapsedMonths + 1; //Adjust array index
   if (dekaDay == 0) {
+    // Another index adjust. (0-27 -> 1-28)
     dekaMonth -= 1;
     dekaDay = 28;
   }
   return (dekaDateObj = {
-    day: dekaDay,
-    month: dekaMonth,
-    year: today.getFullYear(),
-    yearlyDay: elapsedDays
+    day: dekaDay, // Dekatrian Day (DD) 1-28
+    month: dekaMonth, // Dakatrian Month (MM) 1-13
+    year: today.getFullYear(), // Year (YYYY)
+    yearlyDay: elapsedDays, // How many days in Dekatrian Calendar since 01\01
+    monthName: dekaMonthName(dekaMonth) // Dekatrian full Month name
   });
 }
